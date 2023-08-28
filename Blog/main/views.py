@@ -1,6 +1,7 @@
 from django.shortcuts import render,redirect
 from django.http import HttpRequest, HttpResponse
 from .models import Recpie
+from .models import Comment
 
 
 # Create your views here.
@@ -43,9 +44,20 @@ def all_recpies(request: HttpRequest):
 def detail_recpie(request: HttpRequest,recpie_id):
    try:
     recpie = Recpie.objects.get(id=recpie_id)
+    comments=Comment.objects.filter(recpie=recpie)
    except:
      return render(request, "main/notfound.html")
-   return render(request, "main/detail_recpie.html",{"recpie":recpie} )
+   
+   if request.method == "POST":
+        new_comment = Comment(recpie=recpie, name=request.POST["name"], content=request.POST["content"], rating=request.POST["rating"])
+        new_comment.save()
+
+    
+ 
+ 
+   return render(request, "main/detail_recpie.html",{"recpie":recpie ,"Comment":Comment,"comments":comments} )
+
+
 
 def not_found(request: HttpRequest):
 
