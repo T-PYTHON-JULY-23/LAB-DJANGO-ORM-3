@@ -1,0 +1,58 @@
+{% extends 'main/base.html'%}
+{% block title%} Deatails for post {{post.title}} {% endblock %}
+
+
+{% block content %}
+<div class="d-flex flex-column gap-2">
+    <h2>{{ post.title }}</h2>
+    <div class="d-flex justify-content-between">
+        <h3>{{post.author}}</h3>
+        <div>
+            <a href="{% url 'main:post_update_view' post.id %}" class="btn btn-warning">Update</a>
+            <a href="{% url 'main:post_delete_view' post.id %}" class="btn btn-danger">Delete</a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-4"><img src="{{ post.image.url }}" class="rounded-4 w-100" /></div>
+        <div class="col">
+            <div>
+                <p>{{ post.content }}</p>
+            </div>
+        </div>
+    </div>
+    <hr>
+    <h4>Comments</h4>
+    <div class="mt-4">
+
+        {% for comment in comments %}
+            <div class="d-flex flex-column gap-1 border border-1 rounded p-4 mt-3">
+                <h4>{{comment.name}}</h4>
+                <h6>{{ comment.created_at }}</h6>
+                <p>{{ comment.content }}</p>
+            </div>
+            
+        {% endfor %}
+
+    <div class="row mt-4">
+        <div class="col-6">
+
+            <form action="{% url 'main:post_detail_view' post.id %}" method="post" >
+                {% csrf_token %}
+                <input type="text" class="form-control" name="name"  placeholder="Your Name"/>
+                <textarea  class="form-control mt-2" name="content"  placeholder="Your comment"></textarea>
+
+
+                <select name="rating" class="form-select">
+                    {% for value, title in Comment.rating_choices %}
+                        <option value="{{value}}">{{title}}</option>
+                    {% endfor %}
+                </select>
+                <input class="btn btn-primary mt-2" type="submit" value="Add Comment" />
+
+            </form>
+        </div>
+        
+    </div>
+
+</div>
+{% endblock %}
