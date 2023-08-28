@@ -1,0 +1,67 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block title %} Detail {% endblock %}
+
+{% block content %}
+
+<div class="border border-2 p-2 rounded d-flex flex-column align-items-center text-center mt-3 gap-2">
+    <div class="d-flex">
+        <h2 class="">{{ post.title }}</h2>
+    </div>
+    <div class="text-cente">
+        <img class="w-50" src="{{post.image.url}}" />
+    </div>
+    <p style="width: 70%;">{{ post.content }}</p>
+    <p> {{ post.category }} <br> {{ post.publish_date }}</p>
+    <div>
+        <a href="{% url 'main:update_view' post.id %}" class="btn btn-warning">Update</a>
+        <button type="button" class="btn btn-danger" data-bs-toggle="modal"
+            data-bs-target="#deleteModal">Delete</button>
+    </div>
+</div>
+<h5 class="mt-3 p-2">Comments</h5>
+<div class="mt-3">
+    {% for comment in comments %}
+    <div class="d-flex flex-column gap-1 border border-1 rounded p-4 mt-3">
+        <h4>{{comment.name}}</h4>
+        <h6>{{ comment.created_at }}</h6>
+        <p>{{ comment.content }}</p>
+    </div>
+
+    {% endfor %}
+</div>
+<h5 class="mt-3 p-2">Add comment</h5>
+<div class="row mt-4">
+    <div class="col-6 pb-4">
+
+        <form action="{% url 'main:post_detail_view' post.id %}" method="post">
+            {% csrf_token %}
+            <input type="text" class="form-control" name="name" placeholder="Your Name" />
+            <textarea class="form-control mt-3" name="content" placeholder="Your comment"></textarea>
+            <input class="btn btn-primary mt-3" type="submit" value="Add Comment" />
+
+        </form>
+
+    </div>
+</div>
+
+<!-- for delete  -->
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Delete Book</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to delete <span class="fw-bold">{{book.title}}</span> ?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <a href="{% url 'main:delete_view' post.id %}" class="btn btn-danger">Delete!</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
