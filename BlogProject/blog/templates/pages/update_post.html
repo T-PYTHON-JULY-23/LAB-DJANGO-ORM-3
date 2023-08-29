@@ -1,0 +1,24 @@
+{% load static %}
+<h1>Edit Post</h1>
+<form method="post" action="{% url 'update_post' post_id=post.id %}" enctype="multipart/form-data">
+  {% csrf_token %}
+  <label for="title">Title:</label>
+  <input type="text" id="title" name="title" value="{{ post.title }}"><br>
+  <label for="content">Content:</label>
+  <textarea id="content" name="content">{{ post.content }}</textarea><br>
+  <label for="category">Category:</label>
+  <select id="category" name="category">
+    <option value="Technology" {% if post.category == 'Technology' %}selected{% endif %}>Technology</option>
+    <option value="Fashion" {% if post.category == 'Fashion' %}selected{% endif %}>Fashion</option>
+    <option value="Travel" {% if post.category == 'Travel' %}selected{% endif %}>Travel</option>
+    <option value="Food" {% if post.category == 'Food' %}selected{% endif %}>Food</option>
+    <option value="Sports" {% if post.category == 'Sports' %}selected{% endif %}>Sports</option>
+  </select><br>
+  <label for="image">Image:</label>
+  <input type="file" id="image" name="image"><br>  <!-- Add input field for the image -->
+  {% if post.image %}
+    <p>Current Image:</p>
+    <img src="{{ post.image.url }}" alt="Post Image"><br>  <!-- Display current image if it exists -->
+  {% endif %}
+  <button type="submit">Update Post</button>
+</form>

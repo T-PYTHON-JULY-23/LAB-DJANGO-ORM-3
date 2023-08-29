@@ -1,0 +1,41 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}"/>
+    <title>Blog</title>
+</head>
+<body>
+    <div class="post-details">
+        <h>{{ post.title }}</h>
+        <p>{{ post.content }}</p>
+        <br>
+        <p>Category: {{ post.category }}</p>
+        <p>Published on: {{ post.publish_date }}</p>
+        {% if post.image %}
+            <img src="{{ post.image.url }}" alt="Post Image">
+        {% endif %}
+        <a href="{% url 'update_post' post_id=post.id %}">Edit</a><br>
+        <a href="{% url 'delete_post' post_id=post.id %}">Delete</a><br>
+    </div>
+
+<!-- Display the post -->
+<h2>{{ post.title }}</h2>
+<p>{{ post.content }}</p>
+
+<!-- Display the comments -->
+<h3>Comments:</h3>
+{% for comment in comments %}
+    <p><strong>{{ comment.name }}</strong>: {{ comment.content }}</p>
+{% empty %}
+    <p>No comments yet.</p>
+{% endfor %}
+
+<!-- New comment form -->
+<form method="post" action="{% url 'add_comment' post_id=post.id %}">
+    {% csrf_token %}
+    <input type="text" name="name" placeholder="Your name">
+    <textarea name="content" placeholder="Comment content"></textarea>
+    <input type="datetime-local" name="timestamp" placeholder="Comment timestamp">
+    <button type="submit">Add Comment</button>
+</form>
