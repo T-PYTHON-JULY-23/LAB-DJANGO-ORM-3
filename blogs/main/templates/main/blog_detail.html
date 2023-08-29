@@ -1,0 +1,54 @@
+{% extends 'main/index.html' %}
+
+
+{% block body %}
+<div class="container mt-3"> 
+    <div class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+      <div class="p-4 d-flex flex-column position-static">
+
+
+        <strong class="d-inline-block mb-2 text-primary">{{blog.title}}</strong>
+        <img src="{{ blog.image.url }}" class=" d-flex justify-content-end gap-4 w-50" />
+
+`     <p class="text-white mb-auto">{{blog.Content}}</p>
+      <p class="text-white mb-auto">{{blog.Bootcamp}}</p>
+      <div class=" text-white mb-1">{{blog.publish_date}}</div>
+      <a href="{% url 'main:home_page' %}" class="btn btn-success" tabindex="-1" style="margin-top: 10px;" role="button" aria-disabled="true">Go back</a>
+        
+
+
+
+      
+    </div>
+    </div>
+
+    <h4 class="text-white mb-auto">Comments</h4>
+    <div class="mt-4">
+
+        {% for comment in comments %}
+            <div class="d-flex flex-column gap-1 border border-1 rounded p-4 mt-3">
+                <h4 class="text-white mb-auto">{{ comment.name }}</h4>
+                <h6 class="text-white mb-auto">{{ comment.created_at }}</h6>
+                <p class="text-white mb-auto">{{ comment.content }}</p>
+            </div>
+            
+        {% endfor %}
+    </div>
+    <div class="row mt-4">
+      <div class="col-6">
+
+          <form action="{% url 'main:blog_detail_view' blog.id %}" method="post" >
+              {% csrf_token %}
+              <input type="text" class="form-control" name="name"  placeholder="Your Name"/>
+              <textarea  class="form-control mt-2" name="content"  placeholder="Your comment"></textarea>
+
+              <input class="btn btn-primary mt-2" type="submit" value="Add Comment" />
+
+          </form>
+
+      </div>
+      </div>
+  </div>
+
+
+{% endblock body %}
