@@ -1,0 +1,102 @@
+{% extends 'main/base.html' %}
+
+{% block title %} Details for blog {{ blog.title }} {% endblock %}
+
+{% block content %}
+<style>
+
+.btn{
+    font-size: 20px;
+    width:110px;
+    background-color:rgb(202, 112, 112);
+    color:rgb(15, 37, 30);
+    border-color: rgb(15, 37, 30);
+    }
+#content{  
+    font-size: 23px;
+}
+.blogbox{
+    margin-top: 20px;
+    background-color: rgba(223, 200, 200, 0.541);
+    font-size: 1.40rem;
+    row-gap: 23px;
+    padding: 10px;
+}
+#title{
+    color: rgb(202, 112, 112);
+}
+.image{
+margin-right:300px ;
+        width: 500px;
+        height: 300px; 
+    }
+.comments{
+margin-top: 40px;
+    }
+.add{
+    font-size: 20px;
+    width:120px;
+    background-color:rgb(202, 112, 112);
+    color:rgb(15, 37, 30);
+    border-color: rgb(15, 37, 30);
+    width:190px;
+    }
+.add_comment{
+    justify-content: center;
+    }
+</style>
+<div class="d-flex flex-column gap-2 blogbox"> 
+    <h3 id="title">{{ blog.title }}</h3>
+    <div class="d-flex justify-content-between ">
+        <p id="category">category: {{ blog.category }}</h6>
+            <div class="row-12">
+                <img src="{{ blog.image.url }}" class="rounded-3 image" />    
+            </div>
+            
+    </div>
+    <div class="col d-flex justify-content-end gap-4">
+    <p id="content">{{ blog.content }}</p>
+</div>
+<div class="col edit_btn">
+    <a href="{% url 'main:blog_update_view' blog.id %}" class="btn ">Update</a>
+    <a href="{% url 'main:blog_delete_view' blog.id %}" class="btn ">Delete</a>
+</div></div>
+
+<hr>
+
+<div class="row mt-4 add_comment">
+    <div class="col-9">
+
+        <form action="{% url 'main:blog_detail_view' blog.id %}" method="post" >
+            {% csrf_token %}
+            <input type="text" class="form-control" name="name"  placeholder="Your Name"/>
+            <textarea  class="form-control mt-2" name="content"  placeholder="Your comment"></textarea>
+
+            <input class=" btn add mt-2" type="submit" value="Add Comment" />
+
+        </form>
+
+    </div>
+</div>
+<div class="comments">
+<h2 >Comments</h2>
+<div class="mt-4">
+
+    {% for comment in comments %}
+        <div class="d-flex flex-column gap-1 border border-1 rounded p-4 mt-3">
+            <h4>{{comment.name}}</h4>
+            <h6>{{ comment.created_at }}</h6>
+            <p>{{ comment.content }}</p>
+            <div class="col edit_btn">
+                <a href="{% url 'main:update_comment_view' comment.id %}" class="btn ">Update</a>
+            </div>
+        </div>
+        
+        
+    </div>
+</div>
+    {% endfor %}
+
+
+
+{% endblock %}

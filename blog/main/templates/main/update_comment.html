@@ -1,0 +1,84 @@
+{% extends 'main/base.html'%}
+{% load static %}
+
+{% block title %} Update comment {{comment.name}} {% endblock %}
+
+
+{% block content %}
+<style>
+.adding_box{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 900px;
+    row-gap: 28px;
+    padding: 34px;
+    background-color: rgba(223, 200, 200, 0.541);
+    color: rgb(26, 66, 53);
+    font-size: 1.40rem;
+    position: absolute;
+    top: 20%;
+    left: 15%;
+    }
+#header{
+    font-size: 40px;
+    color: rgb(202, 112, 112);
+    margin-left: 200px;
+    margin-bottom: 25px;}
+#btn{
+    margin-top: 60px;
+    margin-left: 250px;
+    width:170px;
+    background-color:rgb(202, 112, 112);
+    color:rgb(15, 37, 30);
+    border-color: rgb(15, 37, 30);
+    }
+.box_item{
+    background-color: rgba(80, 126, 118, 0.418);
+    margin: 12px;
+    
+}
+input {
+    border: none;
+    border-bottom: 2px solid rgb(19, 14, 14);
+}
+select{
+
+    border: none;
+    border-bottom: 2px solid rgb(19, 14, 14);
+    height: 38px;
+}
+textarea{
+    border: none;
+    border-bottom: 2px solid rgb(19, 14, 14);
+    width: 680px;
+    height: 150px;
+}
+</style>
+
+
+<div class="row-10 adding_box " >  
+    <div class="col-9">
+      <h3 id="header"> Update comment</h3>
+
+    <form action="{% url 'main:update_comment_view' comment.id  %}" method="post" >
+        {% csrf_token %} 
+        <div class="row">
+        <div class="col form-group">
+        <label>name: </label>
+        <input class="box_item overflow-auto" value="{{ comment.name }}" type="text" name="name" placeholder="your name" />
+        </div>
+          <div class="row-5">
+          <div class="form-group col">
+           <label for="exampleFormControlTextarea1">comment content:</label>
+           <div class="row">
+            <textarea class="box_item" name="content" class="form-control" id="exampleFormControlTextarea1" rows="3">{{ comment.content }}</textarea>
+          </div></div>
+        <div class="col ">
+            <button id="btn" type="submit" value="update Blog" class="btn btn-primary">Update</button>
+          </div></div>
+    </form>
+    </div>
+    </div>
+{% endblock %}
