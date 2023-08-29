@@ -1,0 +1,74 @@
+{% extends 'main/base.html' %} {% block title %} Post Detailes {% endblock %}
+{%block content %}
+<div>
+  <div class="row d-flex justify-content-between">
+    <h2 class="col-9">{{post.title}}</h2>
+    <div class="col-3 text-end">
+      <a
+        href="{% url 'main:post_update_view' post.id %}"
+        class="col btn btn-warning p-1"
+      >
+        Update
+      </a>
+      <a
+        href="{% url 'main:post_delete_view' post.id %}"
+        class="col btn btn-danger p-1"
+      >
+        Delete
+      </a>
+    </div>
+  </div>
+
+  <p class="fw-light">{{ post.content }}</p>
+
+  <hr />
+
+  <div class="row">
+    <h2>Comments :</h2>
+    <div class="col">
+      <form action="{% url 'main:post_detail_view' post.id %}" method="post">
+        {% csrf_token %}
+        <div class="mb-3">
+          <input
+            placeholder="your name ..."
+            type="text"
+            class="form-control"
+            id="id_title"
+            name="user_name"
+            maxlength="2048"
+            required
+          />
+        </div>
+        <div class="mb-3">
+          <textarea
+            placeholder="your comments ..."
+            class="form-control"
+            id="id_content"
+            name="content"
+            rows="4"
+            required
+          ></textarea>
+        </div>
+
+        <div class="mb-3">
+          <button type="submit" class="btn btn-primary">Add Comment</button>
+        </div>
+      </form>
+    </div>
+    <div class="col">
+      {% for comment in comments %}
+      <div class="row mb-2">
+        <div class="card h-100">
+          <h5 class="card-header">{{comment.user_name}}</h5>
+          <div class="card-body d-flex flex-column justify-content-between">
+            <p class="card-text">{{ comment.content }}</p>
+            <p class="card-text">{{ comment.time }}</p>
+            
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+{% endblock %}
