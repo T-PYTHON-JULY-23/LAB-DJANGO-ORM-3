@@ -1,0 +1,46 @@
+{% extends 'main/base.html' %}
+
+{% block title %} Book Club for Books Lovers {% endblock %}
+
+
+{% block content %}
+<div class="container">
+    <div class="row ">
+        <div class="col-12 col-md-12 order-2 order-md-1">
+            <div class="d-flex flex-column justify-content-center align-items-center h-50 ">
+                <h1>Welcome to New Blog</h1>
+                <p> a record of news, people's opinions, photos, and videos about a particular subject that someone puts on the internet and adds information, pictures, etc. to regularly</p>
+            </div>
+            <hr>
+        <div class="pt-4 pb-4">
+                <h3>Recent Blog posts</h3>
+                
+    </div>
+    <div class="row ">
+        <img class="col-6" src="static/images/blog.jpg"/>
+        {% for new in news %} 
+           
+            <div class=" mb-3 mt-4" style="max-width: 540px;">
+                <div class="row g-0">
+                    <div class="col-md-4">
+                        <img src="{{ new.image.url }}" class="img-fluid rounded-start" alt="...">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body ps-4">
+                            <h5 class="card-title">{{new.title}}</h5>
+                            <p class="card-text ">{{new.content}}</p>
+                            <p class="card-text"><small class="text-body-secondary">{{new.publish_date}}</small></p>
+                            <a href="{% url 'main:detail_view' new.id %}" class="d-flex justify-content-between text-decoration-none">
+                                <h5>more</h5>
+                                <span class="material-symbols-outlined"> arrow_forward</span>
+                                </a> 
+                        </div>
+                    </div>
+                </div>
+         
+        {% endfor %}
+        </div>
+    </div>
+</div>
+
+{% endblock %}
