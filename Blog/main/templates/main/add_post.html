@@ -1,0 +1,37 @@
+{% extends 'main/base.html' %}
+
+{%block title%} Cooking Blog {%endblock%}
+
+{%block content%}
+<div class="container">
+<h1>Add a New Post</h1>
+<form action="{%url 'main:add_post'%}" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="mb-3">
+        <label for="title" class="form-label">Title</label>
+        <input type="text" class="form-control" id="title" name="title">
+    </div>
+    <div class="mb-3">
+        <label for="content" class="form-label">Content</label>
+        <textarea class="form-control" id="content" name="content" rows="6"></textarea>
+    </div>
+    <div class="mb-3">
+        <label>Catagory: </label>
+                <select name="catagory">
+                    <option value="Apptizer"> Apptizer </option>
+                    <option value="Drinks"> Drinks </option>
+                    <option value="Main dish"> Main dish </option>
+                </select>
+    </div>
+    <div class="mb-3">
+        <label for="publish_date" class="form-label">Publish Date</label>
+        <input type="date" class="form-control" id="publish_date" name="publish_date">
+    </div>
+
+    <label>Choose Image: </label>
+    <input type="file" name="image" class="form-control"/>
+
+    <button type="submit" class="btn btn-primary">Add Post</button>
+</form>
+</div>
+{%endblock%}

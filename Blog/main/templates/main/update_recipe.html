@@ -1,0 +1,40 @@
+{% extends 'main/base.html' %}
+
+{% block title %} Update recipe {{ recipe.title }} {% endblock %}
+
+
+{% block content %}
+<div class="container">
+    <div class="row">
+
+        <div class="col">
+            <h2>Update Recipe</h2>
+
+            <form  action="{% url 'main:recipe_update_view' recipe.id %}" method="post" enctype="multipart/form-data" class="d-flex flex-column gap-2">
+                {% csrf_token %} 
+                <label>Title: </label>
+                <input type="text" name="title" value="{{ recipe.title }}" class="form-control"/>
+                
+                <label>Content: </label>
+                <textarea name="content" class="form-control">{{ recipe.content }}</textarea> 
+                <label>Catagory: </label>
+                <select name="catagory">
+                    <option value="1"> Apptizer </option>
+                    <option value="2"> Drinks </option>
+                    <option value="3"> Main dish </option>
+                </select>
+                <input type="file" name="image" class="form-control"/>
+
+                <label>Choose Image: </label>
+                <label>Publish Date:</label>
+                <input type="date" name="publish_date" value="{{ recipe.publish_date.isoformat }}" class="form-control"/>
+
+                <input type="submit" value="update Recipe" class="btn btn-primary"/>
+
+            </form>
+
+        </div>
+
+    </div>
+</div>
+{% endblock %}

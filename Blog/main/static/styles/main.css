@@ -1,0 +1,54 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap');
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins',sans-serif;
+}
+body{
+    background-color: rgba(171, 170, 170, 0.345);
+}
+
+.wrapper{
+    min-height: 100vh;
+    background:linear-gradient(rgba(0,0,0,0.4),rgba(0,0,0,0.4)), url(/static/images/background.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.wrapper h1{
+    font-family: 'Playfair Display', serif;
+    font-size: 40px;
+    color: #ffffff;
+    font-weight: 600;
+    transition: 0.5s;
+    
+}
+
+.wrapper h1:hover{
+    -webkit-text-stroke: 2px #ffffff;
+    color: transparent;
+}
+.logo{
+    width: 100px;
+} 
+.card img{
+    height: 250px;
+}
+.nav-link:hover::after{
+    content: '';
+    height: 2px;
+    width: 100%;
+    background-color: #ffffff;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+}
+.nav-link{
+    transition: all 0.2s;
+    position: relative;
+}
