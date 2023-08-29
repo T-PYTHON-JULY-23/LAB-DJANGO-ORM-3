@@ -1,0 +1,41 @@
+{% extends 'main/base.html' %}
+
+{%block title%} all Recipes {%endblock%}
+
+{%block content%}
+
+
+<div class="container mt-2">
+    <div class="text-center my5">
+        <img src="/static/images/allrecipes2.png">
+        <hr/>
+    </div>
+    <div class="d-flex justify-content-between mt-4">
+        {% if "search" in request.GET %}
+        <h1> Search Results for "<span class="text-success"> {{ request.GET.search }} </span>"</h1>
+        {% endif %}
+    <!--Row start-->
+    <div class="row">
+        {% for recipe in recipes %}
+
+        <div class="col-lg-3 col-md6 col-sm-12">
+            <div class="card mb-5 shadow-sm">
+                <img src="{{ recipe.image.url }}" class="img-fluid"/>
+
+                <div class="card-body">
+                    <div class="card-title">
+                        <h2>{{ recipe.title }}</h2>
+                    </div>
+                    <div class="card-text">
+                        <h4>Catagory :{{recipe.catagory}} </h4>
+                    </div>
+                    <p class="card-text">Published on: {{ recipe.publish_date }}</p>
+                    <a href="{% url 'main:recipe_detail_view' recipe.id %}" class="btn btn-outline-primary rounded-0 float-end">View Recipe</a>
+                </div>
+            </div>
+        </div>
+        {%endfor%}
+        <!--Row end-->
+    </div>
+</div>
+{%endblock%}
