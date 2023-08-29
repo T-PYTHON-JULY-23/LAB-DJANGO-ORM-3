@@ -1,0 +1,114 @@
+{% extends 'blog/base.html'%}
+{% load static%}
+
+
+{%block title%} Detail of post {{post.title}} {%endblock%}
+
+{%block background%}
+
+<div>
+    <div style="background-image: url('/static/images/add_background.jpg');" class="background effect"></div>
+</div>
+
+{%endblock%}
+
+
+{%block content%}
+
+
+<div class="container"> 
+    <div class="d-flex flex-column gap-2 border border-3 mt-5 ps-3 " style="background-color: white; opacity: 0.9;">
+        <h1> #{{post.title}}</h1>
+        <div class="d-flex justify-content-between">
+            <h3> {{post.category}} </h3>
+        </div>
+
+
+
+        <p style="font-size: 30px;"> {{post.content}}</p>
+    </div>
+
+    <div class="d-flex justify-content-end mt-4 gap-3">
+        <a href="{% url 'blog:update_post_view' post.id %}" class="btn btn-warning"><h4 style="color: white;"> Update </h4></a>
+        <button type="button" class="btn btn-danger"  data-bs-toggle="modal" data-bs-target="#deleteModal"> <h4> Delet </h4>  </button>
+
+
+        
+       
+        <!--<a href="{% url 'blog:delet_post_view' post.id %}" class="btn btn-danger"><h4> </h4></a> ---> 
+    </div>
+
+    <div class="row ">
+        <div class="col-6 d-flex flex-column">
+            <img class="rounded-4" src="{{post.image_upload.url}}">  
+
+        </div>
+
+    </div>
+
+
+    <h1 style="color: seagreen;"> <b> comments </b> </h1>
+
+    <div class="mt-4 ">
+        {%for comm in comments%}
+        <div class="d-flex flex-column border border-1 rounded-4 p-2 mt-3" style="background-color: aliceblue;">
+            <h4> {{comm.name}} </h4>
+            <p style="font-size: 30px;">{{comm.content_comment}} </p>
+            <h6> {{comm.created_at}}</h6>
+
+
+        </div>
+        {%endfor%}
+
+    </div>
+
+    <div class="row mt-4">
+        <div class="col-5">
+            <form action="{% url 'blog:detail_post_view' post.id %}" method="post">
+                {% csrf_token %}
+
+                <label ><h2 style="color: seagreen;"> Write Your Comment </h2> </label>
+
+                <input name="name" type="text" class="form-control " placeholder="Enter Your Name">
+                <textarea name="content" class="form-control mt-2" placeholder="Enter Your Comment"> </textarea>
+
+                <input class="btn btn-success mt-2" type="submit" value="Add Comment">
+
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+</div>
+
+
+
+<!--  model delet  -->
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Delete Post </h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <h5>Are you sure you want to delete </h5> <span class="fw-bold"> <h5>  post: {{post.title}} ? </h5> </span>  
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <a href="{% url 'blog:delet_post_view' post.id %}" class="btn btn-danger">Yes, Delete!</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!---->
+
+
+{%endblock%}
+
+
