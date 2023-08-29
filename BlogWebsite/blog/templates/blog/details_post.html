@@ -1,0 +1,57 @@
+{% extends 'main/base.html' %}
+
+{% block title %} details {% endblock %}
+
+
+{% block content%}
+
+
+<div class="details flex-column gap-2">
+    <h2>{{ blog.title }}</h2>
+    <div class="d-flex justify-content-between">
+        <div class="col-4"><img src="{{blog.image.url }}" class="rounded-4 w-100" /></div>
+        <h3>{{blog.Content}}</h3>
+        <div>
+            <a href="{% url 'blog:update_post_view' blog.id %}" class="btn btn-warning">Update</a>
+            <a href="{% url 'blog:delete_post_view' blog.id %}" class="btn btn-danger">Delete</a>
+        </div>
+    </div>
+    <div class="col d-flex justify-content-end gap-4">
+        <img src="{{ book.image.url }}" class="rounded-4" />
+        <p>{{blog.category }}</p> 
+    </div>
+
+    <hr/>
+
+    <h4>Comments</h4>
+    <div class="mt-4">
+
+        {% for comment in comments %}
+            <div class="d-flex flex-column gap-1 border border-1 rounded p-4 mt-3">
+                <h4>{{comment.name}}</h4>
+                <h6>{{ comment.created_at }}</h6>
+                <p>{{ comment.content }}</p>
+            </div>
+            
+        {% endfor %}
+    </div>
+
+    <div class="row mt-4">
+        <div class="col-6">
+
+            <form action="" method="post" >
+                {% csrf_token %}
+                <input type="text" class="form-control" name="name"  placeholder="Your Name"/>
+                <textarea  class="form-control mt-2" name="content"  placeholder="Your comment"></textarea>
+
+                <input class="btn btn-primary mt-2" type="submit" value="Add Comment" />
+
+            </form>
+
+        </div>
+    </div>
+</div>
+
+
+
+{%endblock%}
