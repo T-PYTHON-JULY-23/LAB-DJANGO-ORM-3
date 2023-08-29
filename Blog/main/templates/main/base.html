@@ -25,10 +25,9 @@
                         <li><a href="{% url 'main:post_view' %}" class="nav-link ">Posts</a></li>
                        <li class="me-0">
                        
-                          <form action="{% url 'main:post_view' %}" method="post"  class="d-inline-flex  serchbox">
-                             {% csrf_token %} 
-                             <select class="form-select "   name="category">
-                              <option value="country of recpie" selected>country of recpie</option>
+                          <form action="{% url 'main:post_view' %}" method="get"  class="d-inline-flex  serchbox"> 
+                             <select class="form-select"   name="category">
+                              <option value="all" selected>country of recpie</option>
                               <option value="Saudi Arabia">Saudi Arabia</option>
                               <option value="United Kingdom">United Kingdom </option>
                               <option value="United States">United States</option>

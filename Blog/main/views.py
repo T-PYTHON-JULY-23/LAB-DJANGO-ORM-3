@@ -27,15 +27,16 @@ def all_recpies(request: HttpRequest):
     
    
     recpies = Recpie.objects.all()
-    if request.method=="POST":
-        serech_title=request.POST['search']
-        c_category=request.POST['category']
+    if "search" in request.GET and "category" in request.GET:
+        serech_title=request.GET['search']
+        c_category=request.GET['category']
         if serech_title!='':
-          recpies=Recpie.objects.filter(title_recipes__startswith=serech_title)
-        if c_category!='country of recpie':
-          recpies=Recpie.objects.filter(category=c_category)
-        
-        
+            recpies=Recpie.objects.filter(title_recipes__contains=serech_title)
+        if c_category!='all':
+            recpies=Recpie.objects.filter(category=c_category)
+            
+     
+ 
    
  
     return render(request, "main/post.html", context = {"recpies" : recpies})
@@ -51,10 +52,6 @@ def detail_recpie(request: HttpRequest,recpie_id):
    if request.method == "POST":
         new_comment = Comment(recpie=recpie, name=request.POST["name"], content=request.POST["content"], rating=request.POST["rating"])
         new_comment.save()
-
-    
- 
- 
    return render(request, "main/detail_recpie.html",{"recpie":recpie ,"Comment":Comment,"comments":comments} )
 
 
