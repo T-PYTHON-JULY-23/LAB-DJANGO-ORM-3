@@ -1,0 +1,71 @@
+{%extends 'blog/base.html'%}
+
+<title>{% block title%} Detalis for blogs {{post.title}} {%endblock%}</title>
+
+{% block content %}
+<div class ="col-4 mt-4 ">
+ <div class= "d-flex flex-column gap-3 border border-1 shadow rounded-4 p-4 mt-1 h-100 justify-content-between"> 
+    <img src="{{post.image.url}}"class ="rounded-4 object-fit-cover border border-1 book-poster">
+           
+     <h2>{{ post.title }}</h2>
+ </div>
+</div>
+    <div class="d-flex justify-content-between">
+        <h3>{{post.category}}</h3>
+        <div>
+            <a href="{% url 'blog:post_update_view' post.id %}" class="btn btn-warning"> To Update</a>
+            <a href="{% url 'blog:post_delete_view' post.id %}" class="btn btn-danger">To Delete</a>
+        </div>
+    </div>
+    <p>{{ post.content }}</p>
+    <p>{{ post.publish_date }}</p>
+</div>
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Delete Post</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          Are you sure you want to delete <span class="fw-bold">{{post.title}}</span> ? 
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <a href="{% url 'blog:post_delete_view' post.id %}"  class="btn btn-danger">Yes, Delete!</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-4"><img src="{{ blog.image.url }}" class="rounded-4 w-100" /></div>
+    <div class="col">
+    
+     </div>
+   <hr/>
+  <div class="mt-4">
+
+    {% for comment in comments %}
+        <div class="d-flex flex-column gap-1 border border-1 rounded p-4 mt-3">
+            <h4>{{comment.name}}</h4>
+            <h6>{{ comment.created_at }}</h6>
+            <p>{{ comment.content }}</p>
+        </div>
+        
+    {% endfor %}
+</div>
+<div class="row mt-4">
+     <div class="col-6">
+
+        <form action="{% url 'blog:post_detail_view' post.id %}" method="post" >
+            {% csrf_token %}
+            <input type="text" class="form-control" name="name"  placeholder="Your Name"/>
+            <textarea  class="form-control mt-2" name="content"  placeholder="Your comment"></textarea>
+
+            <input class="btn btn-primary mt-2" type="submit" value="Add Comment" />
+
+        </form>
+
+    </div>
+</div>d
+{% endblock %}
