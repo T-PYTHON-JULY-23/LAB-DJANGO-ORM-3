@@ -10,7 +10,7 @@ class Blog(models.Model):
     title = models.CharField(max_length=2048,null=True)
     Content = models.TextField()
     category = models.TextField(max_length=128 ,choices=category_choices)
-    image = models.ImageField(upload_to="images/", default="images/default.jpeg")
+    image = models.ImageField(upload_to="images/", default="images/default.jpg")
     publish_date = models.DateField()
 
 

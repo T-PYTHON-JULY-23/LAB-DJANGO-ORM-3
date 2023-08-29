@@ -40,13 +40,15 @@ def search_view(request: HttpRequest):
 def details_post_view(request:HttpRequest, blog_id):
 
     blog = Blog.objects.get(id=blog_id)
+
     comments = Comment.objects.filter(blog=blog)
 
     if request.method == "POST":
         new_comment = Comment(blog=blog, name=request.POST["name"], content=request.POST["content"])
         new_comment.save()
 
-    return render(request,"blog/details_post.html",{"blog" : blog, "comments" : comments, "Comment" : Comment})
+    return render(request,"blog/details_post.html",{"blog" : blog, "comments" : comments})
+
 
 
 def update_post_view(request:HttpRequest,blog_id):
@@ -58,6 +60,8 @@ def update_post_view(request:HttpRequest,blog_id):
         blog.Content = request.POST["Content"]
         blog.category = request.POST["category"]
         blog.publish_date = request.POST["publish_date"]
+        if "image" in request.FILES:
+            blog.image = request.FILES["image"]
         blog.save()
 
         return redirect("blog:details_post_view", blog_id=blog.id)

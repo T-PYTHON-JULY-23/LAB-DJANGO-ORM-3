@@ -9,6 +9,7 @@
 <div class="details flex-column gap-2">
     <h2>{{ blog.title }}</h2>
     <div class="d-flex justify-content-between">
+        <div class="col-4"><img src="{{blog.image.url }}" class="rounded-4 w-100" /></div>
         <h3>{{blog.Content}}</h3>
         <div>
             <a href="{% url 'blog:update_post_view' blog.id %}" class="btn btn-warning">Update</a>
@@ -38,7 +39,7 @@
     <div class="row mt-4">
         <div class="col-6">
 
-            <form action="{% url 'details_post_view' blog.id %}" method="post" >
+            <form action="" method="post" >
                 {% csrf_token %}
                 <input type="text" class="form-control" name="name"  placeholder="Your Name"/>
                 <textarea  class="form-control mt-2" name="content"  placeholder="Your comment"></textarea>

@@ -9,7 +9,7 @@
         <div class="col">
             <h2>Update blog</h2>
 
-            <form  action="{% url 'blog:update_post_view' blog.id %}" method="post" class="d-flex flex-column gap-2">
+            <form  action="{% url 'blog:update_post_view' blog.id %}" method="post" enctype="multipart/form-data" class="d-flex flex-column gap-2">
                 {% csrf_token %} 
                 <label>Title: </label>
                 <input type="text" name="title" value="{{ blog.title }}"/>
@@ -26,7 +26,7 @@
 
                 <div class="d-flex gap-2 align-items-center">
                     <h5>Current Image:</h5>
-                    <img src="{{ blog.image.url }}"  class="rounded-4 object-fit-cover book-poster-update" />
+                    <img src="{{ blog.image.url }}"  class="rounded-4 w-100 post-update" />
                 </div>
                 <input type="file" name="image" class="form-control"/>
 
@@ -35,7 +35,7 @@
                 <label>Publish Date:</label>
                 <input type="date" name="publish_date" value="{{ blog.publish_date.isoformat }}" />
 
-                <input type="submit" value="update blog" class="btn btn-primary"/>
+                <input type="submit" value="update post" class="btn btn-primary"/>
 
             </form>
 
