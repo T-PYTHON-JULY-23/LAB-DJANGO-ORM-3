@@ -32,7 +32,7 @@
         {% if request.user.is_authenticated %}
         <a href="{% url 'blog:update_post_view' post.id %}" class="btn btn-warning"><h4 style="color: white;"> Update </h4></a>
         <button type="button" class="btn btn-danger"  data-bs-toggle="modal" data-bs-target="#deleteModal"> <h4> Delet </h4>  </button>
-        {% end if %}
+        {% endif %}
 
 
         

@@ -7,7 +7,7 @@ from django.contrib.auth import authenticate,login,logout
 
 def register_user(request:HttpRequest):
     if request.method=="POST":
-        nwe_user = User.objects.create_user(first_name=request.POST['first_name'], last_name=request.POST['last_name'], username=request.POST['username'], email=request.POST['email'], password=request.POST['password'],) 
+        nwe_user = User.objects.create_user(first_name=request.POST['first_name'], last_name=request.POST['last_name'], username=request.POST['username'], email=request.POST['email'], password=request.POST['password']) 
         nwe_user.save()
         return redirect('accounts:login_user_viwe')
     
@@ -35,7 +35,7 @@ def login_user(request:HttpRequest):
 def logout_user(request:HttpRequest):
     logout(request)
 
-    return redirect("accounts:login_user_viwe")
+    return redirect("accounts:login_user_view")
 
 
 

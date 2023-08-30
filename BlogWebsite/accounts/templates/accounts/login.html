@@ -15,6 +15,44 @@
 
 {%block content%}
 
+
+<div  class="container mt-4 p-3" style="background-color: white; opacity: 0.9;"> 
+
+    <div class="row d-flex justify-content-center">
+        <div class="col-6">
+            {% if msg%}
+
+            <h2 class="text-white bg-danger pt-2"> {{msg}} </h2>
+            {% endif %}
+
+            <div class="d-flex flex-column justify-content-center align-items-center mt-3 mb-3 ">
+            <h1 > Log In </h1> 
+            </div>
+
+            <form action="{% url 'accounts:login_user_view'%}" method="post" class="d-flex flex-column justify-content-center align-items-center gap-4">
+                {% csrf_token %} 
+
+                <input type="text" name="username" class="form-control" placeholder="User Name">
+                <input type="password" name="password" class="form-control" placeholder="Password">
+            
+                <input type="submit" value="Log in" class="btn btn-warning btn-lg mt-4"/> 
+
+            </form>
+        </div>
+    </div>
+
+</div>
+
+
+
+{%endblock%}
+
+
+
+
+
+
+<!--
 <div class="row">
     <div class="col">
 
@@ -23,23 +61,27 @@
         <h2 class="text-white bg-danger pt-2"> {{msg}} </h2>
         {% endif %}
 
-        <form action="account:login_user_viwe" method="post">
-
+        <form action="{% url 'account:login_user_viwe'%}" method="post" class="d-flex flex-column justify-content-center align-items-center gap-4">
+            {% csrf_token %} 
+        
             <input type="text" name="username" class="form-control" placeholder="User Name">
             <input type="password" name="password" class="form-control" placeholder="Password">
-
-            <input type="submit" value="Login" class="btn btn-primary">
-
-
+        
+            <input type="submit" value="Log in" class="btn btn-warning btn-lg mt-4"/> 
+        
         </form>
+
 
 
     </div>
 
 </div>
 
+-->
 
 
 
 
-{%endblock%}
+
+
+

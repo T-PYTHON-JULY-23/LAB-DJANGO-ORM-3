@@ -40,7 +40,7 @@
 
 
                   <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <a style="color: black; font-size: 20px;" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
 
                       {% if request.user.is_authenticated %}
                         {{request.user.first_name}}
@@ -51,9 +51,9 @@
                     
                     <ul class="dropdown-menu">
                       {% if request.user.is_authenticated %}
-                        <li><a class="dropdown-item" href="{% url 'acoounts:logout_user_viwe'%}">Log out</a></li>
+                        <li><a class="dropdown-item" href="{% url 'accounts:logout_user_view'%}">Log out</a></li>
                       {% else %}
-                        <li><a class="dropdown-item" href="{% url 'accounts:login_user_viwe' %}">Log in </a></li>
+                        <li><a class="dropdown-item" href="{% url 'accounts:login_user_view' %}">Log in </a></li>
                         <li><a class="dropdown-item" href="{% url 'accounts:register_user_view' %}">Register</a></li>
                       {% endif %}
                     </ul>
