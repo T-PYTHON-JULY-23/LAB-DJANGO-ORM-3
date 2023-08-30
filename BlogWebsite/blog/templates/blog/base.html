@@ -30,11 +30,37 @@
                     <a style="color: black; font-size: 20px;" class="nav-link" href="/"> Home </a>
                   </li>
                   <li class="nav-item">
+                    {% if request.user.is_authenticated %}
                     <a style="color: black; font-size: 20px;" class="nav-link" href="{% url 'blog:add_post_view'%}"> Add a post </a>
+                    {% endif %}
                   </li>
                   <li class="nav-item">
                     <a style="color: black; font-size: 20px;" class="nav-link" href="{% url 'blog:all_post_view'%}" > Display post </a>
                   </li>
+
+
+                  <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+
+                      {% if request.user.is_authenticated %}
+                        {{request.user.first_name}}
+                      {% else %}
+                        Register
+                      {% endif %}
+                    </a>
+                    
+                    <ul class="dropdown-menu">
+                      {% if request.user.is_authenticated %}
+                        <li><a class="dropdown-item" href="{% url 'acoounts:logout_user_viwe'%}">Log out</a></li>
+                      {% else %}
+                        <li><a class="dropdown-item" href="{% url 'accounts:login_user_viwe' %}">Log in </a></li>
+                        <li><a class="dropdown-item" href="{% url 'accounts:register_user_view' %}">Register</a></li>
+                      {% endif %}
+                    </ul>
+                  </li>
+
+
+
                 </ul>
               </div>
 

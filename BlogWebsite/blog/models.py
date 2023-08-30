@@ -12,6 +12,11 @@ class Post(models.Model):
     image_upload = models.ImageField(upload_to='images/' , default='images/default.png')
     publish_date =models.DateTimeField()
 
+    def __str__(self) -> str:
+        return f"{self.title}"
+
+
+
 
 class Comment(models.Model):
 
@@ -19,3 +24,6 @@ class Comment(models.Model):
     name= models.CharField(max_length=512)
     content_comment = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self) -> str:
+        return f"{self.name}"

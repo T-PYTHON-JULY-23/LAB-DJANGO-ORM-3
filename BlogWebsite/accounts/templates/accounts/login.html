@@ -1,0 +1,45 @@
+{% extends 'blog/base.html'%}
+{% load static%}
+
+
+{%block title%} User Login {%endblock%}
+
+
+{%block background%}
+
+<div>
+    <div style="background-image: url('/static/images/add_background.jpg');" class="background effect"></div>
+</div>
+
+{%endblock%}
+
+{%block content%}
+
+<div class="row">
+    <div class="col">
+
+        {% if msg%}
+
+        <h2 class="text-white bg-danger pt-2"> {{msg}} </h2>
+        {% endif %}
+
+        <form action="account:login_user_viwe" method="post">
+
+            <input type="text" name="username" class="form-control" placeholder="User Name">
+            <input type="password" name="password" class="form-control" placeholder="Password">
+
+            <input type="submit" value="Login" class="btn btn-primary">
+
+
+        </form>
+
+
+    </div>
+
+</div>
+
+
+
+
+
+{%endblock%}
