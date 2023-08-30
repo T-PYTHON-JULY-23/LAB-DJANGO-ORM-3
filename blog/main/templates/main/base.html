@@ -24,9 +24,11 @@
                 <li class="nav-item">
                     <a class="nav-link active" aria-current="page" href="{% url 'main:home_view' %}">Home</a>
                 </li>
+                {% if request.user.is_authenticated %}
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'main:add_post_view' %}">Add post</a>
                 </li>
+                {% endif %}
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'main:all_posts_view' %}">Posts</a>
                 </li>
@@ -41,6 +43,20 @@
                         <li><a class="dropdown-item" href="{% url 'main:filter_view' %}?lifestyle=true">lifestyle</a></li>
                         <li><a class="dropdown-item" href="{% url 'main:filter_view' %}?reviews=true">reviews</a></li>
                         <li><a class="dropdown-item" href="{% url 'main:filter_view' %}?business=true">business</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                        {% if request.user.is_authenticated %}{{ request.user.username }} {% else %} Register {% endif %}
+                    </a>
+                    <ul class="dropdown-menu">
+                        {% if request.user.is_authenticated %}
+                        <li><a class="dropdown-item" href="{% url 'accounts:logout_user_view' %}">logout</a></li>
+                        {% else %}
+                        <li><a class="dropdown-item" href="{% url 'accounts:login_user_view' %}">sign in</a></li>
+                        <li><a class="dropdown-item" href="{% url 'accounts:register_user_view' %}">sign up</a></li>
+                        {% endif %}
                     </ul>
                 </li>
             </ul>

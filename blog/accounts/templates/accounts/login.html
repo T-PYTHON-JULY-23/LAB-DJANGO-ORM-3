@@ -1,0 +1,25 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block title %} Sing in {% endblock%}
+
+{% block content %}
+    <div class="row d-flex flex-column align-items-center text-center pt-5">
+        <div class="col-6">
+            {% if msg %} 
+                <h5 class="text-white bg-danger p-2">{{msg}}</h5>
+            {% endif %}
+            <h2>Sing in</h2>
+            <form action="{% url 'accounts:login_user_view' %}" method="post" >
+                {% csrf_token %}
+                <input type="text" name="username" class="form-control mt-3" placeholder="User Name" />
+                <input type="password" name="password" class="form-control mt-3" placeholder="Password" />
+
+                <input type="submit" value="Sing in" class="btn btn-primary mt-4" />
+
+            </form>
+
+        </div>
+    </div>
+    
+{% endblock %}

@@ -8,6 +8,9 @@ def home_view(request: HttpRequest):
 
 def add_post_view(request: HttpRequest):
     try:
+        if not request.user.is_authenticated:
+            return redirect("accounts:login_user_view")
+
         if request.method == "POST":
             new_post = Post(title=request.POST["title"], content=request.POST["content"], category=request.POST["category"],image=request.FILES["image"])
             new_post.save()
@@ -39,6 +42,9 @@ def post_detail_view(request: HttpRequest,post_id):
 
 def update_view(request: HttpRequest,post_id):
     try:
+        if not request.user.is_authenticated:
+            return redirect("accounts:login_user_view")
+        
         post = Post.objects.get(id=post_id)
         if request.method == "POST":
             post.title = request.POST["title"]
@@ -56,6 +62,9 @@ def update_view(request: HttpRequest,post_id):
 
 def delete_view(request: HttpRequest,post_id):
     try:
+        if not request.user.is_authenticated:
+            return redirect("accounts:login_user_view")
+        
         post = Post.objects.get(id=post_id)
         post.delete()
 
