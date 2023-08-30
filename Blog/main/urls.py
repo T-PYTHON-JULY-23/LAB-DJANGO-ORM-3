@@ -11,6 +11,12 @@ urlpatterns = [
     path('detali/<recpie_id>/', views.detail_recpie, name="detail_recpie"),
     path('update/<recpie_id>/', views.update_recpie, name="update_recpie"),
     path('delete/<recpie_id>/', views.delete_recpie, name="delete_recpie"),
+    path("favorite/add/<recpie_id>/", views.add_fav_recpie, name="add_fav_recpie"),
+    path("favorite/remove/<recpie_id>/", views.remove_fav_recpie, name="remove_fav_recpie"),
+    path("favorite/", views.user_fav_recpie, name="user_fav_recpie")
+
+
+
        
 
     

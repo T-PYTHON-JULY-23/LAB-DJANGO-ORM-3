@@ -1,0 +1,36 @@
+{% extends 'main/base.html' %}
+
+{% block title %} Favorite recipes  {% endblock %}
+
+
+{% block content %}
+
+<div class="container pt-5 border-top">
+  <h1 class="p-3 titlehome mb-4">{{request.user.first_name}} favorites recpies </h1>
+   
+    <div class="row mb-2 ">
+        {% for favorite in request.user.favorite_set.all %}
+
+        <div class="col-md-4 ">
+          <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative ">
+            <div class="row ps-4" >
+              <img src={{favorite.recpie.image.url}} width="100px" />
+          </div>
+            <div class="col p-4 d-flex flex-column position-static  ">
+              <strong class="d-inline-block mb-2 text-primary-emphasis">recipe</strong>
+              <h3 class=" display-8 titleblog">{{favorite.recpie.title_recipes}}</h3>
+              <div class="mb-1 text-body-secondary titlerecipes"> country of recipe :{{favorite.recpie.category}}</div>
+              <strong class=" mb-2 text-primary-emphasis ">Ingredients :</strong> 
+            <a class="btn " href="{% url 'main:detail_recpie' favorite.recpie.id %}">MORE »</a>
+            
+        
+            </div>
+           
+            
+          </div>
+        </div> 
+        {%endfor%}
+      </div>
+     
+</div>
+{% endblock %}

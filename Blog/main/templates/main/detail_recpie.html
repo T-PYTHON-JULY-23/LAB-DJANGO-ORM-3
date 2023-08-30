@@ -11,7 +11,29 @@
    
     <div class="col p-4 d-flex flex-column position-static  ">
         <strong class="d-inline-block mb-2 text-primary-emphasis">recipe</strong>
-        <h3 class=" display-6 titleblog">{{recpie.title_recipes}}</h3>
+        <div class="row ">
+        <div class="col">
+            <h3 class=" display-6 titleblog">{{recpie.title_recipes}}</h3>
+        </div>
+        <div class="col text-end me-5 ">
+
+            <h3><a href="{% if is_favorite %}{% url 'main:remove_fav_recpie' recpie.id %}{% else %}{% url 'main:add_fav_recpie' recpie.id %}{% endif %}" class="{% if is_favorite %} text-danger {% endif%}">
+               
+                {% if is_favorite %}
+                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-suit-heart-fill " viewBox="0 0 16 16">
+                    <path d="M4 1c2.21 0 4 1.755 4 3.92C8 2.755 9.79 1 12 1s4 1.755 4 3.92c0 3.263-3.234 4.414-7.608 9.608a.513.513 0 0 1-.784 0C3.234 9.334 0 8.183 0 4.92 0 2.755 1.79 1 4 1z"/>
+                  </svg>
+                {%else%}
+                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-suit-heart" viewBox="0 0 16 16">
+                    <path d="m8 6.236-.894-1.789c-.222-.443-.607-1.08-1.152-1.595C5.418 2.345 4.776 2 4 2 2.324 2 1 3.326 1 4.92c0 1.211.554 2.066 1.868 3.37.337.334.721.695 1.146 1.093C5.122 10.423 6.5 11.717 8 13.447c1.5-1.73 2.878-3.024 3.986-4.064.425-.398.81-.76 1.146-1.093C14.446 6.986 15 6.131 15 4.92 15 3.326 13.676 2 12 2c-.777 0-1.418.345-1.954.852-.545.515-.93 1.152-1.152 1.595L8 6.236zm.392 8.292a.513.513 0 0 1-.784 0c-1.601-1.902-3.05-3.262-4.243-4.381C1.3 8.208 0 6.989 0 4.92 0 2.755 1.79 1 4 1c1.6 0 2.719 1.05 3.404 2.008.26.365.458.716.596.992a7.55 7.55 0 0 1 .596-.992C9.281 2.049 10.4 1 12 1c2.21 0 4 1.755 4 3.92 0 2.069-1.3 3.288-3.365 5.227-1.193 1.12-2.642 2.48-4.243 4.38z"/>
+                    </svg>
+
+                
+                {% endif%}
+                </a>
+            </h3>
+            
+        </div>
         <div class="mb-1 text-body-secondary titlerecipes"> publish date :{{recpie.publish_date}}</div>
         <div class="mb-1 text-body-secondary titlerecipes"> country of recipe :{{recpie.category}}</div>
         <strong class=" mb-2 text-primary-emphasis ">Ingredients :</strong> 
@@ -21,16 +43,65 @@
         <p class="card-text mb-auto desblog">
             {{recpie.Instructions}}</p>
         <div class=" p-3 flex-column gap-4 mt-5">
+            {% if request.user.is_authenticated %}
             <a class="btn btn-outline-warning ms-3 " href="{% url 'main:update_recpie' recpie.id %}">Update »</a>
-            <a class="btn btn-outline-danger ms-3" href="{% url 'main:delete_recpie' recpie.id %}">Delete »</a>
+            <!-- Button trigger modal -->
+            <button type="button" class="btn btn-outline-danger ms-3" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                Delete »
+            </button>
+            
+            <!-- Modal -->
+            <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">Modal title</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                    ...
+                    </div>
+                    <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary ms-3" data-bs-dismiss="modal">Cnacele</button>
+                    <a class="btn btn-outline-danger ms-3" href="{% url 'main:delete_recpie' recpie.id %}">Delete »</a>
+                </div>
+                </div>
+                </div>
+            </div>
+            
+            
+           
+            {% else %} 
+            <p>
+                <button class="btn btn-outline-warning ms-3" type="button" data-bs-toggle="collapse" data-bs-target="#collapseWidthExample" aria-expanded="false" aria-controls="collapseWidthExample">
+                    Update
+                </button>
+                <button class="btn btn-outline-danger ms-3" type="button" data-bs-toggle="collapse" data-bs-target="#collapseWidthExample" aria-expanded="false" aria-controls="collapseWidthExample">
+                    Delete
+                </button>
+              </p>
+              <div style="min-height: 120px;">
+                <div class="collapse collapse-horizontal" id="collapseWidthExample">
+                  <div class="alert alert-danger d-flex align-items-center " role="alert">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-exclamation-triangle-fill me-2" viewBox="0 0 16 16">
+                      <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+                    </svg> <div>
+                       you can't delete recpie or update if you are not registed
+                    </div>
+                  </div>
+                 
+                </div>
+              </div>
+              {%endif%}
+
         </div> 
         <!-- comment section-->
         <div class="container  p-4 mb-5 d-flex row">
-            <h1 class="titleblog p-4">Comments</h1>
+            <h1 class="titleblog ">Comments</h1>
             <div class="container  ">
                 {%for comment in comments%}
                 <div class=" border rounded-3 p-4 mt-3">
-                <h6 class="fw-bold text-primary-emphasis mb-1 mt-3 titleblog">{{comment.name}}</h6>
+                <h6 class="fw-bold text-primary-emphasis mb-1 mt-3 titleblog">{{comment.user}}</h6>
                 <p class="text-muted small mb-0 ">
                     Shared At - {{comment.created_at}}
                 </p>
@@ -41,27 +112,36 @@
         
                 {%endfor%}
             </div>
+            <h5 class="mt-5 titleblog "> Add comment </h5>
+            {% if  request.user.is_authenticated %} 
+                <form action="{% url 'main:detail_recpie' recpie.id %}" method="post" class="form-outline w-100"  >
+                    {% csrf_token %}
+                
+                  
+                    <label class="mt-4">Rating: </label>
+                    <select name="rating" class="form-select mt-1" >
+                        {% for value, title in Comment.rating_choices %}
+                        <option value="{{value}}">{{title}}</option>
+                    {% endfor %}
+                    </select>
+                    <textarea name="content" class="form-control mt-4"  rows="4"
+                    style="background: #fff;" placeholder="Comments"></textarea>
+                
+                    <input type="submit" value="Post comment" class="btn btn-outline-success   mt-4"/>  
+                
 
-            <form action="{% url 'main:detail_recpie' recpie.id %}" method="post" class="form-outline w-100">
-                {% csrf_token %}
-               
-                <h5 class="mt-5 titleblog "> Add comment </h5>
-                <input type="text" class="form-control mt-2 " name="name" placeholder=" your name" rows="4" style="background: #fff;"/>
-                <label class="mt-4">Rating: </label>
-                <select name="rating" class="form-select mt-1" >
-                    {% for value, title in Comment.rating_choices %}
-                    <option value="{{value}}">{{title}}</option>
-                {% endfor %}
-                </select>
-                <textarea name="content" class="form-control mt-4"  rows="4"
-                style="background: #fff;" placeholder="Comments"></textarea>
-               
-                <input type="submit" value="Post comment" class="btn btn-outline-success   mt-4"/>  
-              
 
+                </form>
+            {%else%}  
+            <div class="alert alert-light d-flex align-items-center m-5 " role="alert">
+                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-exclamation-triangle-fill me-2" viewBox="0 0 16 16">
+                  <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+                </svg> <div>
+                   you can't add comment to recpie if you are not registed , Please <a class=" link-warning" href="{% url 'users:login_user' %} ">sign in</a> , or <a class="link-success" href="{% url 'users:register_user' %}">sign up</a>
+                </div>
+              </div>
 
-            </form>
-
+            {%endif%}
         </div> 
     </div>
             

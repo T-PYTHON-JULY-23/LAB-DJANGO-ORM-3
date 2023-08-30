@@ -1,7 +1,7 @@
 from django.shortcuts import render,redirect
 from django.http import HttpRequest, HttpResponse
 from .models import Recpie
-from .models import Comment
+from .models import Comment,Favorite
 
 
 # Create your views here.
@@ -49,10 +49,17 @@ def detail_recpie(request: HttpRequest,recpie_id):
    except:
      return render(request, "main/notfound.html")
    
-   if request.method == "POST":
-        new_comment = Comment(recpie=recpie, name=request.POST["name"], content=request.POST["content"], rating=request.POST["rating"])
+   is_favorite = False
+
+   if request.user.is_authenticated:
+        is_favorite = Favorite.objects.filter(recpie=recpie, user=request.user).exists()
+
+
+   
+   if request.method == "POST" and request.user.is_authenticated:
+        new_comment = Comment(recpie=recpie, user=request.user, content=request.POST["content"], rating=request.POST["rating"])
         new_comment.save()
-   return render(request, "main/detail_recpie.html",{"recpie":recpie ,"Comment":Comment,"comments":comments} )
+   return render(request, "main/detail_recpie.html",{"recpie":recpie ,"Comment":Comment,"comments":comments , "is_favorite" : is_favorite} )
 
 
 
@@ -61,6 +68,10 @@ def not_found(request: HttpRequest):
     return render(request, "main/notfound.html")
 
 def update_recpie(request: HttpRequest,recpie_id):
+    
+    if not request.user.is_authenticated:
+        return redirect("users:login_user")
+    
     #updating recpie
     recpie = Recpie.objects.get(id=recpie_id)
     if request.method == "POST":
@@ -69,7 +80,8 @@ def update_recpie(request: HttpRequest,recpie_id):
         recpie.Ingredients=request.POST['Ingredients']
         recpie.Instructions=request.POST['Instructions']
         recpie.publish_date=request.POST['publish_date']
-        recpie.image=request.FILES['image']
+        if "image" in request.FILES:
+         recpie.image=request.FILES['image']
         recpie.save()
         return redirect("main:post_view")
         
@@ -83,4 +95,36 @@ def delete_recpie(request: HttpRequest,recpie_id):
     recpie.delete()
     return redirect("main:post_view")
 
+def add_fav_recpie(request: HttpRequest,recpie_id):
+    
+     if not request.user.is_authenticated:
+        return redirect("users:login_user")
+     
+     recpie=Recpie.objects.get(id=recpie_id)
+     if not Favorite.objects.filter(user=request.user, recpie=recpie).exists():
+        new_favorite = Favorite(user=request.user, recpie=recpie)
+        new_favorite.save()
+    
+     return redirect("main:detail_recpie", recpie_id=recpie_id)
+ 
+def remove_fav_recpie(request: HttpRequest,recpie_id):
+    
+    if not request.user.is_authenticated:
+        return redirect("users:login_user")
+    
+
+    recpie=Recpie.objects.get(id=recpie_id)   
+    user_favorite = Favorite.objects.filter(user=request.user, recpie=recpie).first()
+
+    if user_favorite:
+        user_favorite.delete()
+        
+
+    return redirect("main:detail_recpie", recpie_id=recpie_id)
+
+def user_fav_recpie(request: HttpRequest):
+
+    return render(request, 'main/favorite.html')
+
+    
    
