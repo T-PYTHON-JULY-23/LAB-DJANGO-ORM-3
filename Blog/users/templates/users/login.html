@@ -1,0 +1,52 @@
+{% extends 'main/base.html' %}
+
+{% block title %} Regist User {% endblock %}
+
+
+{% block content %}
+<div class="container border p-4 mb-5 d-flex card text-black" style="border-radius: 25px" >
+    <form class="mx-1 mx-md-4 m-2" action="{% url 'users:login_user' %}" method="post" >
+        {% csrf_token %}
+        <h1 class="titlehome mb-5">Register</h1>
+
+   
+
+        <div class="d-flex flex-row align-items-center me-2 mb-4">
+            <div class="form-outline flex-fill ">
+              <label class="form-label desblog" >User Name</label>
+              <input type="text" name="username" class="form-control mt-2"  />
+           </div>
+        </div>
+       
+        <div class="d-flex flex-row align-items-center mb-4">
+          <div class="form-outline flex-fill mb-0">
+            <label class="form-label desblog" >  password</label>
+            <input type="password" class="form-control" name="password" />
+          </div>
+        </div> <div class="d-flex flex-row align-items-center ">
+            <div class="form-outline flex-fill mb-0">
+                {% if msg %} 
+                <h5 class="text-danger  p-3 desblog">{{msg}} <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-x-circle" viewBox="0 0 16 16">
+                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                    <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+                  </svg></h5>
+            {% endif %}
+            </div>
+          </div>
+
+        
+
+        
+
+        <div class="d-flex   mb-lg-4">
+          <input type="submit" value="Log in" class="btn btn-outline-success  mt-4"/>
+        </div>
+
+      </form>
+
+    <div class="col p-4 d-flex flex-column position-static  ">
+
+    </div>
+            
+</div>
+{%endblock%}
